@@ -1,4 +1,4 @@
-# Runing single image inference
+# Running single image inference
 
 To run inference on a single image make sure you change the input sample's dimensions along with the intrinsic parameters in detect.py. 
 
