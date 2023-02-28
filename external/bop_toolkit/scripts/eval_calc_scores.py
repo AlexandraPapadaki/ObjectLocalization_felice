@@ -65,7 +65,7 @@ p = {
   # using eval_calc_errors.py.
   # Example: 'hodan-iros15_lm-test/error=vsd_ntop=1_delta=15_tau=20_cost=step'
   'error_dir_paths': [
-    r'/PROGRESSIVEX_carObj1-test/error=add_ntop=1', #'/path/to/calculated/errors', # TODO car
+    r'/PROGRESSIVEX_carObj1-test/error=vsd_ntop=1_delta=15.000_tau=0.500', #'/path/to/calculated/errors', # TODO car
   ],
 
   # Folder for the calculated pose errors and performance scores.

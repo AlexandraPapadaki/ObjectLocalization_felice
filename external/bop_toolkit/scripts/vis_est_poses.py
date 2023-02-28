@@ -48,7 +48,7 @@ p = {
   # of the format. Example results can be found at:
   # http://ptak.felk.cvut.cz/6DB/public/bop_sample_results/bop_challenge_2019/
   'result_filenames': [
-    'estimated-poses_carObj1-test.csv', #'/path/to/csv/with/results',
+    'estimated-poses_carObj1-test.csv'
   ],
 
   # Folder containing the BOP datasets.
@@ -117,8 +117,12 @@ for result_fname in p['result_filenames']:
 
   # Load pose estimates.
   misc.log('Loading pose estimates...')
+#  ests = inout.load_bop_results(
+#    os.path.join(config.results_path, result_fname))
+  # TODO carObj1
+  # If having different models for the 2 objects then do the following, otherwise keep only the one above that uses the results_path
   ests = inout.load_bop_results(
-    os.path.join(config.results_path, result_fname))
+    os.path.join('/home/lele/Codes/epos/store/tf_models/extendComp/infer', result_fname))
 
   # Organize the pose estimates by scene, image and object.
   misc.log('Organizing pose estimates...')
