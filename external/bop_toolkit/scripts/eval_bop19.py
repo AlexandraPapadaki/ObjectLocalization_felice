@@ -23,6 +23,7 @@ p = {
       'n_top': -1,
       'type': 'vsd',
       'vsd_deltas': {
+        'carObj1': 15,
         'hb': 15,
         'icbin': 15,
         'icmi': 15,
@@ -35,9 +36,9 @@ p = {
         'tyol': 15,
         'ycbv': 15,
       },
-      'vsd_taus': list(np.arange(0.05, 0.51, 0.05)),
+      'vsd_taus': list(np.arange(0.1, 0.51, 0.05)),
       'vsd_normalized_by_diameter': True,
-      'correct_th': [[th] for th in np.arange(0.05, 0.51, 0.05)]
+      'correct_th': [[th] for th in np.arange(0.1, 0.51, 0.05)]
     },
     {
       'n_top': -1,
@@ -67,7 +68,7 @@ p = {
   # description of the format. Example results can be found at:
   # http://ptak.felk.cvut.cz/6DB/public/bop_sample_results/bop_challenge_2019/
   'result_filenames': [
-    '/relative/path/to/csv/with/results',
+    'PROGRESSIVEX_carObj1-test.csv', #'/relative/path/to/csv/with/results',
   ],
 
   # Folder with results to be evaluated.
@@ -78,7 +79,7 @@ p = {
 
   # File with a list of estimation targets to consider. The file is assumed to
   # be stored in the dataset folder.
-  'targets_filename': 'test_targets_bop19.json',
+  'targets_filename': 'test_targets_car.json', #'test_targets_bop19.json',
 }
 ################################################################################
 
@@ -148,7 +149,7 @@ for result_filename in p['result_filenames']:
     # Calculate error of the pose estimates.
     calc_errors_cmd = [
       'python',
-      os.path.join('scripts', 'eval_calc_errors.py'),
+      os.path.join('eval_calc_errors.py'), #'scripts', 'eval_calc_errors.py'),
       '--n_top={}'.format(error['n_top']),
       '--error_type={}'.format(error['type']),
       '--result_filenames={}'.format(result_filename),
@@ -197,7 +198,7 @@ for result_filename in p['result_filenames']:
 
         calc_scores_cmd = [
           'python',
-          os.path.join('scripts', 'eval_calc_scores.py'),
+          os.path.join('eval_calc_scores.py'), #'scripts', 'eval_calc_scores.py'),
           '--error_dir_paths={}'.format(error_dir_path),
           '--eval_path={}'.format(p['eval_path']),
           '--targets_filename={}'.format(p['targets_filename']),

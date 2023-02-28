@@ -15,10 +15,12 @@ else:
   datasets_path = r'/home/lele/Codes/epos/datasets/carObj1'#'/home/panos/code/SPREADER_DATASET'
 
 # Folder with pose results to be evaluated.
-results_path = r'/home/lele/Codes/epos/store/tf_models/extend/infer' #'/path/to/folder/with/results'
+#results_path = r'/home/lele/Codes/epos/store/tf_models/crfOnly12/infer' #'/path/to/folder/with/results'
+results_path = r'/home/lele/Codes/epos/store/tf_models/crfAndLab12/infer'
 
 # Folder for the calculated pose errors and performance scores.
-eval_path = r'/home/lele/Codes/epos/store/tf_models/extend/eval' #'/path/to/eval/folder'
+#eval_path = r'/home/lele/Codes/epos/store/tf_models/crfOnly12/eval' #'/path/to/eval/folder'
+eval_path = r'/home/lele/Codes/epos/store/tf_models/crfAndLab12/eval'
 
 ######## Extended ########
 

@@ -21,7 +21,7 @@ p = {
   'dataset': 'carObj1', #'spreader', TODO car
 
   # Dataset split. Options: 'train', 'val', 'test'.
-  'dataset_split': 'train', # TODO car default test
+  'dataset_split': 'test', # TODO car default test
 
   # Dataset split type. None = default. See dataset_params.py for options.
   'dataset_split_type': None,

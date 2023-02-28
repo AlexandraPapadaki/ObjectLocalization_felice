@@ -27,7 +27,7 @@ p = {
 
   # Pose error function.
   # Options: 'vsd', 'mssd', 'mspd', 'ad', 'adi', 'add', 'cus', 're', 'te, etc.
-  'error_type': 'mspd', # TODO car
+  'error_type': 'add', # TODO car
 
   # VSD parameters.
   'vsd_deltas': {
@@ -234,6 +234,7 @@ for result_filename in p['result_filenames']:
             p['error_type'], method, dataset, split_type_str, scene_id, im_ind))
 
       # Intrinsic camera matrix.
+      #K = scene_camera[8]['cam_K']
       K = scene_camera[im_id]['cam_K']
 
       # Load the depth image if VSD is selected as the pose error function.
