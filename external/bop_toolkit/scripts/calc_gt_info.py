@@ -25,13 +25,13 @@ from bop_toolkit_lib import visibility
 ################################################################################
 p = {
   # See dataset_params.py for options.
-  'dataset': 'lm',
+  'dataset': 'carObj1', #'spreader', TODO car
 
   # Dataset split. Options: 'train', 'val', 'test'.
-  'dataset_split': 'test',
+  'dataset_split': 'test', # TODO car default test
 
   # Dataset split type. None = default. See dataset_params.py for options.
-  'dataset_split_type': None,
+  'dataset_split_type': 'primesense',
 
   # Whether to save visualizations of visibility masks.
   'vis_visibility_masks': False,

@@ -18,10 +18,10 @@ from bop_toolkit_lib import visualization
 ################################################################################
 p = {
   # See dataset_params.py for options.
-  'dataset': 'lm',
+  'dataset': 'carObj1', # TODO car'spreader',
 
   # Dataset split. Options: 'train', 'val', 'test'.
-  'dataset_split': 'test',
+  'dataset_split': 'train',
 
   # Dataset split type. None = default. See dataset_params.py for options.
   'dataset_split_type': None,

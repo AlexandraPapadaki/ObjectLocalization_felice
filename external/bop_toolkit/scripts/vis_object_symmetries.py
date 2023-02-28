@@ -18,7 +18,7 @@ from bop_toolkit_lib import transform as tr
 ################################################################################
 p = {
   # See dataset_params.py for options.
-  'dataset': 'itodd',
+  'dataset': 'carObj1', #TODO car 'spreader',
 
   # Type of the renderer (used for the VSD pose error function).
   'renderer_type': 'python',  # Options: 'cpp', 'python'.
@@ -53,6 +53,13 @@ p = {
 model_type = None  # None = default.
 if p['dataset'] == 'tless':
   model_type = 'cad'
+elif p['dataset'] == 'carObj1':
+  model_type = 'cad'
+elif p['dataset'] == 'carObj13':
+  model_type = 'cad'
+elif p['dataset'] == 'car':
+  model_type = 'cad'
+
 dp_model = dataset_params.get_model_params(
   p['datasets_path'], p['dataset'], model_type)
 dp_camera = dataset_params.get_camera_params(

@@ -24,7 +24,27 @@ def get_camera_params(datasets_path, dataset_name, cam_type=None):
   :param cam_type: Type of camera.
   :return: Dictionary with camera parameters for the specified dataset.
   """
-  if dataset_name == 'tless':
+  if dataset_name=='spreader':
+    if cam_type is None:
+      cam_type = 'primesense'
+    cam_filename = 'camera_{}.json'.format(cam_type)
+
+  elif dataset_name=='car':
+    if cam_type is None:
+      cam_type = 'primesense'
+    cam_filename = 'camera_{}.json'.format(cam_type)
+
+  elif dataset_name == 'carObj1':
+    if cam_type is None:
+      cam_type = 'primesense'
+    cam_filename = 'camera_{}.json'.format(cam_type)
+
+  elif dataset_name == 'carObj13':
+    if cam_type is None:
+      cam_type = 'primesense'
+    cam_filename = 'camera_{}.json'.format(cam_type)
+
+  elif dataset_name == 'tless':
     # Includes images captured by three sensors. Use Primesense as default.
     if cam_type is None:
       cam_type = 'primesense'
@@ -73,9 +93,12 @@ def get_model_params(datasets_path, dataset_name, model_type=None):
   """
   # Object ID's.
   obj_ids = {
+    'spreader':[1],
+    'carObj1': list(range(1, 3)),
+    'carObj13': [13],
     'lm': list(range(1, 16)),
     'lmo': [1, 5, 6, 8, 9, 10, 11, 12],
-    'tless': list(range(1, 31)),
+    'tless': [1], # list(range(1, 31)),
     'tudl': list(range(1, 4)),
     'tyol': list(range(1, 22)),
     'ruapc': list(range(1, 15)),
@@ -90,6 +113,9 @@ def get_model_params(datasets_path, dataset_name, model_type=None):
   # ID's of objects with ambiguous views evaluated using the ADI pose error
   # function (the others are evaluated using ADD). See Hodan et al. (ECCVW'16).
   symmetric_obj_ids = {
+    'spreader':[1],
+    'carObj1': list(range(1, 3)),
+    'carObj13': [13],  # list(range(1, 3)),
     'lm': [3, 7, 10, 11],
     'lmo': [10, 11],
     'tless': list(range(1, 31)),
@@ -106,6 +132,15 @@ def get_model_params(datasets_path, dataset_name, model_type=None):
 
   # T-LESS includes two types of object models, CAD and reconstructed.
   # Use the CAD models as default.
+  if dataset_name =='spreader' and model_type is None:
+    model_type = 'cad'
+
+  if dataset_name =='carObj1' and model_type is None:
+    model_type = 'cad'
+
+  if dataset_name =='carObj13' and model_type is None:
+    model_type = 'cad'
+    
   if dataset_name == 'tless' and model_type is None:
     model_type = 'cad'
 
@@ -171,9 +206,88 @@ def get_split_params(datasets_path, dataset_name, split, split_type=None):
     depth_ext = '.tif'
 
   p['im_modalities'] = ['rgb', 'depth']
+  #p['im_modalities'] = ['rgb']
+
+  # Spreader dataset
+  if dataset_name == 'spreader':
+    p['scene_ids']=[1]
+    
+    if split_type is None:
+      split_type = 'primesense'
+      
+    p['im_size']={
+      'train':{
+      	'primesense': (720,540)
+      },
+      'test':{
+        'primesense': (1024,768)
+      }
+    }[split][split_type]
+    
+    #panos added ranges for rendering training images
+    p['azimuth_range'] = (0, 2 * math.pi)
+    p['elev_range'] = (0 * math.pi, 0.5 * math.pi)
+    
+  # car
+  elif dataset_name == 'carObj1':
+    if split == 'train':
+      p['scene_ids'] = list(range(1, 3)) # TODO car
+    elif split == 'test':
+      p['scene_ids'] = list(range(1, 3)) # TODO car
+
+    # Use images from the Primesense sensor by default.
+    if split_type is None:
+      split_type = 'primesense'
+
+    p['im_size'] = {
+      'train': {
+        'primesense': (1280, 720) # TODO car resolution
+      },
+      'test': {
+        'primesense': (1280, 720) # TODO car resolution
+      }
+    }[split][split_type]
+
+    p['azimuth_range'] = (0, 2 * math.pi) # TODO car
+    p['elev_range'] = (-0.5 * math.pi, 0.5 * math.pi) # TODO car
+
+   # # The following holds for Primesense, but is similar for the other sensors.
+   # if split == 'test':
+   #   p['depth_range'] = (649.89, 940.04) # TODO car
+   #   p['azimuth_range'] = (0, 2 * math.pi) # TODO car
+   #   p['elev_range'] = (-0.5 * math.pi, 0.5 * math.pi) # TODO car
+
+  # car
+  elif dataset_name == 'carObj13':
+    if split == 'train':
+      p['scene_ids'] = [13] #list(range(1, 3)) # TODO car
+    elif split == 'test':
+      p['scene_ids'] = [13]#list(range(1, 21)) # TODO car
+
+    # Use images from the Primesense sensor by default.
+    if split_type is None:
+      split_type = 'primesense'
+
+    p['im_size'] = {
+      'train': {
+        'primesense': (1280, 720) # TODO car resolution
+      },
+      'test': {
+        'primesense': (1280, 720) # TODO car resolution
+      }
+    }[split][split_type]
+
+    p['azimuth_range'] = (0, 2 * math.pi) # TODO car
+    p['elev_range'] = (-0.5 * math.pi, 0.5 * math.pi) # TODO car
+
+   # # The following holds for Primesense, but is similar for the other sensors.
+   # if split == 'test':
+   #   p['depth_range'] = (649.89, 940.04) # TODO car
+   #   p['azimuth_range'] = (0, 2 * math.pi) # TODO car
+   #   p['elev_range'] = (-0.5 * math.pi, 0.5 * math.pi) # TODO car
 
   # Linemod (LM).
-  if dataset_name == 'lm':
+  elif dataset_name == 'lm':
     p['scene_ids'] = list(range(1, 16))
     p['im_size'] = (640, 480)
 
@@ -208,7 +322,8 @@ def get_split_params(datasets_path, dataset_name, split, split_type=None):
 
     p['im_size'] = {
       'train': {
-        'primesense': (400, 400),
+        #'primesence':(400,400),
+        'primesense': (1928, 1448),
         'kinect': (400, 400),
         'canon': (1900, 1900),
         'render_reconst': (1280, 1024),
@@ -412,8 +527,10 @@ def get_present_scene_ids(dp_split):
   :param dp_split: Path to a folder with datasets.
   :return: List with scene ID's.
   """
+  print(os.path.join(dp_split['split_path'], '*'))
   scene_dirs = [d for d in glob.glob(os.path.join(dp_split['split_path'], '*'))
                 if os.path.isdir(d)]
+  print(scene_dirs)
   scene_ids = [int(os.path.basename(scene_dir)) for scene_dir in scene_dirs]
   scene_ids = sorted(scene_ids)
   return scene_ids

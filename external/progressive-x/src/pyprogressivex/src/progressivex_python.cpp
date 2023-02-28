@@ -136,8 +136,9 @@ int find6DPoses_(
 	// Applying Progressive-X 
 	// (i) if the number of models is not specified, 
 	// (ii) if the number of models is known and is greater than 1.
+	// LELE initially the condition was >1
 	if (maximum_model_number == -1 ||
-		maximum_model_number > 1)
+		maximum_model_number > 1) 
 	{		
 		// Applying Progressive-X
 		progx::ProgressiveX<gcransac::neighborhood::FlannNeighborhoodGraph, // The type of the used neighborhood-graph

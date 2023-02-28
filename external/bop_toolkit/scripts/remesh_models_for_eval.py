@@ -18,7 +18,7 @@ from bop_toolkit_lib import misc
 ################################################################################
 p = {
   # See dataset_params.py for options.
-  'dataset': 'lm',
+  'dataset': 'carObj1', #'spreader', TODO car
 
   # Type of input object models.
   # None = default model type.
@@ -32,7 +32,8 @@ p = {
 
   # Path to meshlabserver.exe (tested version: 1.3.3).
   # On Windows: C:\Program Files\VCG\MeshLab133\meshlabserver.exe
-  'meshlab_server_path': config.meshlab_server_path,
+  'meshlab_server_path': '/usr/bin/meshlabserver',
+  #,config.meshlab_server_path,
 
   # Path to scripts/meshlab_scripts/remesh_for_eval.mlx.
   'meshlab_script_path': os.path.join(

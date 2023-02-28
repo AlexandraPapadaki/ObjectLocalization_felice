@@ -27,10 +27,12 @@ p = {
 
   # Pose error function.
   # Options: 'vsd', 'mssd', 'mspd', 'ad', 'adi', 'add', 'cus', 're', 'te, etc.
-  'error_type': 'vsd',
+  'error_type': 'add', # TODO car
 
   # VSD parameters.
   'vsd_deltas': {
+    'carObj1': 15,
+    'carObj13': 15,
     'hb': 15,
     'icbin': 15,
     'icmi': 15,
@@ -60,7 +62,7 @@ p = {
   # description of the format. Example results can be found at:
   # http://ptak.felk.cvut.cz/6DB/public/bop_sample_results/bop_challenge_2019/
   'result_filenames': [
-    '/path/to/csv/with/results',
+    '/path/to/csv/with/results', # TODO car
   ],
 
   # Folder with results to be evaluated.
@@ -74,7 +76,7 @@ p = {
 
   # File with a list of estimation targets to consider. The file is assumed to
   # be stored in the dataset folder.
-  'targets_filename': 'test_targets_bop19.json',
+  'targets_filename': 'test_targets_car.json', #'test_targets_bop19.json', # TODO car
 
   # Template of path to the output file with calculated errors.
   'out_errors_tpath': os.path.join(
@@ -143,7 +145,8 @@ for result_filename in p['result_filenames']:
   result_name = os.path.splitext(os.path.basename(result_filename))[0]
   result_info = result_name.split('_')
   method = str(result_info[0])
-  dataset_info = result_info[1].split('-')
+
+  dataset_info = result_info[-1].split('-')
   dataset = str(dataset_info[0])
   split = str(dataset_info[1])
   split_type = str(dataset_info[2]) if len(dataset_info) > 2 else None
@@ -231,6 +234,7 @@ for result_filename in p['result_filenames']:
             p['error_type'], method, dataset, split_type_str, scene_id, im_ind))
 
       # Intrinsic camera matrix.
+      #K = scene_camera[8]['cam_K']
       K = scene_camera[im_id]['cam_K']
 
       # Load the depth image if VSD is selected as the pose error function.

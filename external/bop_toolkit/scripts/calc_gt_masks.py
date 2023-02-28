@@ -18,10 +18,10 @@ from bop_toolkit_lib import visibility
 ################################################################################
 p = {
   # See dataset_params.py for options.
-  'dataset': 'lm',
+  'dataset': 'carObj1', #'spreader', TODO car
 
   # Dataset split. Options: 'train', 'val', 'test'.
-  'dataset_split': 'test',
+  'dataset_split': 'test', # TODO car default test
 
   # Dataset split type. None = default. See dataset_params.py for options.
   'dataset_split_type': None,
@@ -44,6 +44,10 @@ dp_split = dataset_params.get_split_params(
 
 model_type = None
 if p['dataset'] == 'tless':
+  model_type = 'cad'
+elif p['dataset'] == 'spreader':
+  model_type = 'cad'
+elif p['dataset'] == 'car':
   model_type = 'cad'
 dp_model = dataset_params.get_model_params(
   p['datasets_path'], p['dataset'], model_type)

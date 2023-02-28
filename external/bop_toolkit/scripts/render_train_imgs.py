@@ -17,7 +17,7 @@ from bop_toolkit_lib import view_sampler
 # PARAMETERS.
 ################################################################################
 # See dataset_params.py for options.
-dataset = 'tyol'
+dataset = 'carObj1' #'spreader' TODO car
 
 # Radii of view spheres from which to render the objects.
 if dataset == 'lm':
@@ -34,6 +34,12 @@ elif dataset == 'icmi':
   radii = [500]
 elif dataset == 'icbin':
   radii = [450]
+elif dataset == 'spreader':
+  radii = [70000]
+elif dataset == 'carObj1':
+  radii = [650]
+elif dataset == 'carObj13':
+  radii = [650]
 else:
   raise ValueError('Unknown dataset.')
 
@@ -42,6 +48,15 @@ model_type = None
 cam_type = None
 if dataset == 'tless':
   model_type = 'reconst'
+  cam_type = 'primesense'
+elif dataset == 'spreader':	#panos models for rendering cad
+  model_type = 'cad'
+  cam_type = 'primesense'
+elif dataset == 'carObj1':	# TODO car
+  model_type = 'cad'
+  cam_type = 'primesense'
+elif dataset == 'carObj13':	# TODO car
+  model_type = 'cad'
   cam_type = 'primesense'
 
 # Objects to render ([] = all objects from the specified dataset).
@@ -52,7 +67,7 @@ obj_ids = []
 min_n_views = 1000
 
 # Rendering parameters.
-ambient_weight = 0.5  # Weight of ambient light [0, 1]
+ambient_weight = 1  # Weight of ambient light [0, 1]  #panos
 shading = 'phong'  # 'flat', 'phong'
 
 # Type of the renderer. Options: 'cpp', 'python'.
@@ -85,12 +100,13 @@ out_views_vis_tpath =\
 
 out_path = out_tpath.format(dataset=dataset)
 misc.ensure_dir(out_path)
+#print(out_tpath)
 
 # Load dataset parameters.
-dp_split_test = dataset_params.get_split_params(datasets_path, dataset, 'test')
+dp_split_test = dataset_params.get_split_params(datasets_path, dataset,'train')
 dp_model = dataset_params.get_model_params(datasets_path, dataset, model_type)
 dp_camera = dataset_params.get_camera_params(datasets_path, dataset, cam_type)
-
+#print(dp_model['model_tpath'])
 if not obj_ids:
   obj_ids = dp_model['obj_ids']
 
@@ -142,6 +158,7 @@ for obj_id in obj_ids:
   if 'texture_file' in model:
     model_texture_path =\
       os.path.join(os.path.dirname(model_path), model['texture_file'])
+    #print(model_texture_path)
     model_texture = inout.load_im(model_texture_path)
   else:
     model_texture = None
@@ -151,7 +168,7 @@ for obj_id in obj_ids:
   im_id = 0
   for radius in radii:
     # Sample viewpoints.
-    view_sampler_mode = 'hinterstoisser'  # 'hinterstoisser' or 'fibonacci'.
+    view_sampler_mode = 'fibonacci'  # 'hinterstoisser' or 'fibonacci'.
     views, views_level = view_sampler.sample_views(
       min_n_views, radius, dp_split_test['azimuth_range'],
       dp_split_test['elev_range'], view_sampler_mode)
@@ -192,6 +209,7 @@ for obj_id in obj_ids:
       # Get 2D bounding box of the object model at the ground truth pose.
       # ys, xs = np.nonzero(depth > 0)
       # obj_bb = misc.calc_2d_bbox(xs, ys, dp_camera['im_size'])
+      # TODO maybe use for 2D BB
 
       scene_camera[im_id] = {
         'cam_K': dp_camera['K'],
